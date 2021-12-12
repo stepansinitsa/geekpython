@@ -40,30 +40,38 @@ print("Результат вычисления произведения всех
 
 # 6. Реализовать два небольших скрипта: а) итератор, генерирующий целые числа, начиная с указанного б) итератор, повторяющий элементы некоторого списка, определенного заранее.
 
+# а)
 from itertools import count
 
 print("<<Бесконечный итератор целых чисел, начиная с указанного>>")
 n = int(input("Введите целое число:"))
 
 for i in count(n):
-    print(i, end=' ')
-
+    if i >=50:
+        break
+    else:
+        print(i)
+# б)
 from itertools import cycle
 
-list = [2, 6, 2, 1, 17, 49, 284, 12, 5, 9]
+list = [2, 6, 2, 1, 17, 49]
 for i in cycle(list):
-    print(i, end=' ')
+    if i >= 150:
+        break
+    else:
+        print(i)
 
 # 7. Реализовать генератор с помощью функции с ключевым словом yield, создающим очередное значение. При вызове функции должен создаваться объект-генератор. Функция должна вызываться следующим образом: for el in fact(n). Функция отвечает за получение факториала числа, а в цикле необходимо выводить только первые n чисел, начиная с 1! и до n!.
 
-from math import factorial
+def gen_factorial(n):
+    if n == 1:
+        yield 1
+    else:
+        for u in gen_factorial(n - 1):
+            yield u
+        yield u * n
 
+for u in gen_factorial(4):
+    print(u)
 
-def factorial_gen(n):
-    for i in range(n):
-        print(i, end='! = ')
-        yield factorial(i)
-
-print("<<Вычисление факториала числа>>")
-for el in factorial_gen(10):
-    print(el)
+print(list(gen_factorial(4)))
